@@ -1,57 +1,72 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import "./Carousel.css";
 import { images } from "../data/CarouselData";
-
-// you can research - how to use material ui
+// you can explore more - and check as how to use materiul ui
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-// complete the function below:
-function Carousel() {
+// implement the class below
+class Carousel extends Component {
+    constructor() {
+        super()
 
-    const [state, setState] = useState(0)
-    const data = images[state]
+        this.state = {
+            id: 0
+        }
 
-    const handleBackClick = () => {
-        if (state == 0) {
-            setState(2)
+    }
+
+    handleBackClick = () => {
+        if (this.state.id === 0) {
+            this.setState({
+                id: 2
+            })
         }
         else {
-            setState(state -1)
+            this.setState({
+                id: this.state.id - 1
+            })
         }
     }
 
-    const handleForwardClick = () => {
-        if (state == 2) {
-            setState(0)
+    handleForwardClick = () => {
+        if (this.state.id === 2) {
+            this.setState({
+                id: 0
+            })
         }
         else {
-            setState(state +1)
+            this.setState({
+                id: this.state.id + 1
+            })
         }
     }
 
-    return (
+    render() {
+        const data = images[this.state.id]
+        return (
+            <div className="container">
 
-        <div className="container">
+                <ArrowBackIosIcon className="arrows" onClick={this.handleBackClick} />
 
-            <ArrowBackIosIcon className="arrows" onClick={handleBackClick} />
+                <div className="details" >
+                    <div>
+                        <h2>{data.title}</h2>
+                    </div>
+                    <div>
+                        <h3>{data.subtitle}</h3>
+                    </div>
 
-            <div className="details" >
-                <div>
-                    <h2>{data.title}</h2>
                 </div>
-                <div>
-                    <h3>{data.subtitle}</h3>
-                </div>
+
+                <img src={data.img} alt="" />
+
+                <ArrowForwardIosIcon className="arrows" onClick={this.handleForwardClick} />
 
             </div>
+        )
+    }
 
-            <img src={data.img} alt="" />
-
-            <ArrowForwardIosIcon className="arrows" onClick={handleForwardClick} />
-
-        </div>
-    )
 }
 
 export default Carousel;
